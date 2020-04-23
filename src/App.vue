@@ -1,28 +1,36 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-list>
+    <template v-for="todo in todos">
+      <v-list-tile v-bind:key="todo.id">
+        <v-list-tile-content>
+          {{todo.text}}
+        </v-list-tile-content>
+        <v-list-tile-action>
+          <v-btn icon v-on:click="deleteTodo(todo.id)">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </v-list-tile-action>
+      </v-list-tile>
+      <v-divider v-bind:key="todo.id"></v-divider>
+    </template>
+  </v-list>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  export default {
+    data() {
+      return {
+        todos:[
+          {id:"1",text:"todo 1"},
+          {id:"2",text:"todo 2"},
+          {id:"3",text:"todo 3"}
+        ]
+      }
+    },
+    methods: {
+      deleteTodo(id) {
+        this.todos = this.todos.filter((todo) => todo.id !== id);
+      }
+    }
   }
-}
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
